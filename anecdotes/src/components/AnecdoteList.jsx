@@ -1,7 +1,12 @@
-import { useAnecdotes } from "../store";
+import { useAnecdotes, useFilter } from "../store";
 export default function AnecdoteList({ vote }) {
   const anecdotes = useAnecdotes();
-  const ordenatedAnecdotesList = anecdotes.toSorted(
+  const filter = useFilter();
+  const filteredAnecdotesList = anecdotes.filter((filteredAnecdotes) => {
+    return filteredAnecdotes.content.includes(filter);
+  });
+
+  const ordenatedAnecdotesList = filteredAnecdotesList.toSorted(
     (a, b) => b.votes - a.votes,
   );
   return (
